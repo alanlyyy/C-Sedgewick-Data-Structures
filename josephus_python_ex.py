@@ -120,9 +120,64 @@ def josephus_algo_cpp_mirror(size, M):
             
     
     return return_index, return_val
+    
+def josephus_algo_ll_version(size, M):
+    #linked list version using arrays for josephus election problem.
 
-print(josephus_algo(13,3))
-print("----------------")
-print(josephus_algo_cpp_mirror(13,3))
+    #populate nums from 1 to size
+    item = [None]*size
+    next = [None]*size
+    
+    for num in range(0,size):
+        item[num] = num + 1
+        
+        if (num == size-1):
+            next[num] = 0
+        else:
+            next[num] = num+1
+    
+    #used to track elements in item array
+    index = 0
+    
+    #values that returned when all nums are traversed
+    return_val = 0;
+    return_index = 0;
+    
+    #keeps count of number of elements we traversed 
+    count = 0
+    
+    #keep track of number of ints left
+    nums_left = size
+    
+    while (nums_left > 1):
+        
+        #update count, we have seen 1 more non zero value
+        count+=1
+            
+        #is len array = M?
+        if (count == M-1):
+            
+            #reset the count
+            count = 0
+            
+            next[index] =  next[next[index]]
+
+            print(item[index], " ", next[index])
+            
+            nums_left -= 1
+                
+        #move on to the next element
+        index = next[index]
+        
+    return_index = index
+    return_val = item[next[index]]
+    
+    return return_index, return_val
+
+
+print(josephus_algo(100,9))
+#print("----------------")
+#print(josephus_algo_cpp_mirror(9,5))
+print(josephus_algo_ll_version(100,9))
                 
         
